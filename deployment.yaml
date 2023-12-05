@@ -35,11 +35,16 @@ spec:
             cpu: 100m
             memory: 100Mi
         env:
-        - name: DB_HOST
+        - name: host
           valueFrom:
             configMapKeyRef:
               name: trabalho-devops
-              key: DB_HOST
+              key: host
+        - name: titulo
+          valueFrom:
+            secretKeyRef:
+              name: trabalho-devops
+              key: titulo
         ports:
         - containerPort:  8000
           name:  trabalho-devops
