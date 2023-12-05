@@ -4,4 +4,5 @@ metadata:
   name: trabalho-devops
   namespace: trabalho
 data:
-  host: "0.0.0.0"
+  NOME: "Eduardo"
+  NOME2: "Marcos" 
