@@ -1,0 +1,9 @@
+# trabalho-devops/templates/configmap.yaml
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "trabalho-devops.fullname" . }}
+  namespace: {{ .Values.namespace | default "default" }}
+data:
+  PORT: "{{ .Values.configmap.PORT }}"
+
