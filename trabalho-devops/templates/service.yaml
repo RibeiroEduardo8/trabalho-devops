@@ -1,20 +1,16 @@
-# trabalho-devops/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "trabalho-devops.fullname" . }}
-  namespace: {{ .Values.namespace | default "default" }}
-spec:
-  selector:
-    app: {{ include "trabalho-devops.name" . }}
-  type: {{ .Values.service.type }}
-  sessionAffinity: {{ .Values.service.sessionAffinity }}
-  sessionAffinityConfig:
-    clientIP:
-      timeoutSeconds: {{ .Values.service.sessionAffinityConfig.clientIP.timeoutSeconds }}
-  ports:
-    - name: {{ .Values.service.ports.name }}
-      protocol: {{ .Values.service.ports.protocol }}
-      port: {{ .Values.service.ports.port }}
-      targetPort: {{ .Values.service.ports.targetPort }}
 
+  labels:
+    {{- include "trabalho-devops.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "trabalho-devops.selectorLabels" . | nindent 4 }}

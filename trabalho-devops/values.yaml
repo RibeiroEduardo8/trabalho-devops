@@ -1,85 +1,42 @@
-# trabalho-devops/values.yaml
-replicaCount: 1
-image:
-  repository: marcosdiniz/trabalho-devops
-  tag: latest
-  pullPolicy: IfNotPresent
-
-resources:
-  limits:
-    cpu: 100m
-    memory: 100Mi
-  requests:
-    cpu: 100m
-    memory: 100Mi
-
-port:
-  containerPort: 8000
-
-env:
-  - name: PORT
-    valueFrom:
-      configMapKeyRef:
-        name: trabalho-devops
-        key: PORT
-
-##################################
-
-# trabalho-devops-chart/values.yaml
-# ... (seções existentes)
-
-service:
-  type: ClusterIP
-  sessionAffinity: None
-  sessionAffinityConfig:
-    clientIP:
-      timeoutSeconds: 10800
-
-  ports:
-    name: trabalho-devops
-    protocol: TCP
-    port: 8000
-    targetPort: 8000
-
-#################################
-
-# trabalho-devops-chart/values.yaml
-namespace: trabalho
-# ... (outras configurações)
-
-#################################
-
-# trabalho-devops-chart/values.yaml
-# ... (outras configurações)
-
-hpa:
-  minReplicas: 1
-  maxReplicas: 3
-  metrics:
-    cpu:
-      averageUtilization: 50
-###################################
-
-# trabalho-devops-chart/values.yaml
-# ... (outras configurações)
-
-configmap:
-  PORT: "8000"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Default values for trabalho-devops.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+replicaCount: 1
+namespace: trabalho
+
+image:
+  repository: marcosdiniz/trabalho-devops
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: latest
+
+
+
+service:
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
+
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+configMap:
+  data:
+    PORT: "8000"
