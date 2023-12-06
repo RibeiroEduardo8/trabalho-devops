@@ -26,7 +26,7 @@ spec:
           # - Each init container must complete successfully before the next one starts.
       containers:
       - name:  trabalho-devops
-        image:  eduardo307/trabalho-devops:latest
+        image:  marcosdiniz/trabalho-devops:latest
         resources:
           requests:
             cpu: 100m
@@ -35,16 +35,11 @@ spec:
             cpu: 100m
             memory: 100Mi
         env:
-        - name: host
+        - name: PORT
           valueFrom:
             configMapKeyRef:
               name: trabalho-devops
-              key: host
-        - name: titulo
-          valueFrom:
-            secretKeyRef:
-              name: trabalho-devops
-              key: titulo
+              key: PORT
         ports:
         - containerPort:  8000
           name:  trabalho-devops

@@ -4,5 +4,5 @@ metadata:
   name: trabalho-devops
   namespace: trabalho
 data:
-  NOME: "Eduardo"
-  NOME2: "Marcos" 
+  PORT: "8000"
+ 
